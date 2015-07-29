@@ -14,6 +14,9 @@ type PatternType = enum {
 	FINGER
 };
 
+import "BINPAC-HILTI-C" bool add_children_analyzer(analyzer_name: string);
+import "BINPAC-HILTI-C" bool forward_children(data: bytes);
+
 import "BINPAC-HILTI-C" bool is_orig();
 
 import "BINPAC-HILTI-C" void file_begin();

@@ -825,6 +825,48 @@ void* libbro_object_mapping_lookup_hilti(::BroObj* obj, hlt_exception** excpt, h
 
 // User-visible Bro::* functions.
 
+bool bro_add_children_analyzer(hlt_string analyzer_name, void* cookie, hlt_exception** excpt, hlt_execution_context* ctx) {
+    auto c = get_protocol_cookie(cookie, "add_children_analyzer");
+
+	char* analyzer_name_s = hlt_string_to_native(analyzer_name, excpt, ctx);
+
+	analyzer::Analyzer* child_analyzer;
+	child_analyzer = analyzer_mgr->InstantiateAnalyzer(analyzer_name_s, c->analyzer->Conn());
+
+	if (child_analyzer) {
+		if (c->analyzer->HasChildAnalyzer(child_analyzer->GetAnalyzerTag())
+				|| !c->analyzer->AddChildAnalyzer(child_analyzer)) {
+			return false;
+		} else {
+
+#ifdef DEBUG
+		PLUGIN_DBG_LOG(HiltiPlugin, "[%s] Child analyzer '%s' added !",
+				c->analyzer->GetAnalyzerName(), child_analyzer->GetAnalyzerName());
+#endif
+		}
+	} else {
+
+#ifdef DEBUG
+	PLUGIN_DBG_LOG(HiltiPlugin, "[%s] Warning, '%s' analyzer not added as child because not found !",
+			c->analyzer->GetAnalyzerName(), analyzer_name_s);
+#endif
+	}
+
+	return true;
+}
+
+bool bro_forward_children(hlt_bytes* b, void* cookie, hlt_exception** excpt, hlt_execution_context* ctx) {
+    auto c = get_protocol_cookie(cookie, "forward_children");
+
+	int len = hlt_bytes_len(b, excpt, ctx);
+	u_char data[len];
+	hlt_bytes_to_raw((int8_t*) data, len, b, excpt, ctx);
+
+	c->analyzer->ForwardPacket(len, data, c->is_orig, 0, NULL, 0);
+
+	return true;
+}
+
 static string _file_id(bro::hilti::pac2_cookie::Protocol* c)
 		{
 		auto id = ::util::fmt("%p-%d", c->analyzer, (int)c->is_orig);
