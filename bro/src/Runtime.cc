@@ -15,6 +15,7 @@
 #include "Rule.h"
 #include "file_analysis/Manager.h"
 #include "Cookie.h"
+#include "analyzer/Manager.h"
 #undef DBG_LOG
 
 extern "C" {

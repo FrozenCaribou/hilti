@@ -33,6 +33,19 @@ static shared_ptr<Type> _resultType(shared_ptr<Expression> op1, shared_ptr<Expre
     // Just return one, the validator will catch the error later.
     return op1->type();
 }
+opBegin(integer::CastBytes : Cast)
+    opOp1(std::make_shared<type::Integer>())
+    opOp2(std::make_shared<type::TypeType>(std::make_shared<type::Bytes>()))
+
+    opDoc("Casts an integer into a bytes.")
+
+    opValidate() {
+    }
+
+    opResult() {
+        return std::make_shared<type::Bytes>();
+    }
+opEnd
 
 opBegin(integer::CastTime : Cast)
     opOp1(std::make_shared<type::Integer>())
