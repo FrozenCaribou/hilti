@@ -37,6 +37,16 @@ void CodeBuilder::visit(constant::Integer* i)
     setResult(result);
 }
 
+void CodeBuilder::visit(expression::operator_::integer::CastBytes* i)
+{
+    auto btype = hilti::builder::reference::type(builder::bytes::type());
+    auto result = builder()->addTmp("b", btype);
+    auto op1 = cg()->hiltiExpression(i->op1());
+    cg()->builder()->addInstruction(result, hilti::instruction::operator_::Pack, op1, hilti::builder::id::create("Hilti::Packed::UInt8"));
+
+    setResult(result);
+}
+
 void CodeBuilder::visit(expression::operator_::integer::CastTime* i)
 {
     auto result = builder()->addTmp("i", hilti::builder::time::type());

@@ -10,6 +10,7 @@ global b: uint32;
 global c: uint16;
 global d: uint8;
 global e: int8;
+global by : bytes;
 
 b = cast<uint32>(a);
 print b;
@@ -33,6 +34,9 @@ e = cast<int8>(d);
 print e;
 a = cast<int32>(e);
 print a;
+
+by = cast<bytes>(e);
+print by;
 
 #cast<string>(e);
 
