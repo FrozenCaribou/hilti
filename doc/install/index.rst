@@ -104,7 +104,7 @@ Docker Image
 
 As it can still be a bit tricky to set this is all up, there's also a
 `Docker image <https://registry.hub.docker.com/u/rsmmr/hilti/>`_
-available that comes with all pieces preinstalled (HILTI/BinPAC++,
+available that comes with all pieces preinstalled (HILTI/Spicy,
 Bro, LLVM/clang)::
 
     # docker run -i -t "rsmmr/hilti"
@@ -129,3 +129,13 @@ To build the Docker image yourself from the supplied Dockerfile, you
 can use the make target::
 
     # make docker-build
+
+Editors
+-------
+
+Syntax highlighting support for ``pac2`` files is available in
+Vim and Emacs through the following plugins:
+
+* `vim-spicy <https://github.com/blipp/vim-spicy>`_ for Vim; and
+
+* `emacs-spicy <https://bitbucket.org/ldklinux/emacs-spicy>`_ for Emacs.
