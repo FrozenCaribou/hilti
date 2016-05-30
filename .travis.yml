@@ -10,4 +10,7 @@ matrix:
       addons: {apt: {sources: [ubuntu-toolchain-r-test, llvm-toolchain-precise-3.5], packages: [libclang-3.5-dev, clang-3.5]}}
       env: LLVM_VERSION=3.5
 
-script: make VERBOSE=1
+script:
+  - test -d build || mkdir build
+  - cd build ; test -e Makefile || cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D BRO_DIST=${BRO_DIST} ..;
+  - make VERBOSE=1
