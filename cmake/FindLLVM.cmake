@@ -44,8 +44,7 @@ else ()
 
   find_program(LLVM_CONFIG_EXEC
       NAMES llvm-config
-      PATHS /usr/lib/llvm-3.5/
-      NO_DEFAULT_PATH
+      PATHS /opt/local/bin  /opt/llvm/bin
   )
 
   find_program(LLVM_CLANG_EXEC
