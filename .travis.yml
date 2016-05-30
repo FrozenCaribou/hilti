@@ -26,11 +26,13 @@ script:
         LIBCXX_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxx-${LLVM_VERSION}.src.tar.xz"
         LIBCXXABI_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxxabi-${LLVM_VERSION}.src.tar.xz"
         TAR_FLAGS="-xJ"
+        echo $LLVM_VERSION
       else
         LLVM_URL="https://github.com/llvm-mirror/llvm/archive/master.tar.gz"
         LIBCXX_URL="https://github.com/llvm-mirror/libcxx/archive/master.tar.gz"
         LIBCXXABI_URL="https://github.com/llvm-mirror/libcxxabi/archive/master.tar.gz"
         TAR_FLAGS="-xz"
+        echo "trunk"
       fi
       mkdir -p llvm llvm/build llvm/projects/libcxx llvm/projects/libcxxabi
       travis_retry wget --quiet -O - ${LLVM_URL} | tar --strip-components=1 ${TAR_FLAGS} -C llvm
@@ -42,6 +44,7 @@ script:
       export CXXFLAGS="-isystem ${DEPS_DIR}/llvm/install/include/c++/v1"
       export LDFLAGS="-L ${DEPS_DIR}/llvm/install/lib -l c++ -l c++abi"
       export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/llvm/install/lib"
+      env
     fi
   - test -d build || mkdir build
   - cd build ; test -e Makefile || cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D BRO_DIST=${BRO_DIST} .. ;
