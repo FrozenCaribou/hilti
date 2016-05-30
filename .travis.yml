@@ -12,5 +12,5 @@ matrix:
 
 script:
   - test -d build || mkdir build
-  - cd build ; test -e Makefile || cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D BRO_DIST=${BRO_DIST} ..;
+  - cd build ; test -e Makefile || cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D BRO_DIST=${BRO_DIST} .. --debug-output;
   - make VERBOSE=1
