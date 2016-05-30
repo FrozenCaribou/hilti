@@ -1,8 +1,4 @@
-language: cpp 
-before_install:
-  - export LD_LIBRARY_PATH=/usr/lib/llvm-${LLVM_VERSION}/lib/
-  - export PATH=/usr/lib/llvm-${LLVM_VERSION}/bin:$PATH
-  - pwd
+language: cpp
 matrix:
   include:
     # The default build:
@@ -10,15 +6,19 @@ matrix:
       addons: {apt: {sources: [ubuntu-toolchain-r-test, llvm-toolchain-precise-3.5, kalakris-cmake], packages: [libclang-3.5-dev, clang-3.5, libc++-dev]}}
       env: LLVM_VERSION=3.5
 
-script:
+before_install:
+  - export LD_LIBRARY_PATH=/usr/lib/llvm-${LLVM_VERSION}/lib/
+  - export PATH=/usr/lib/llvm-${LLVM_VERSION}/bin:$PATH
 
-
+  ############################################################################
+  # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
+  ############################################################################
+  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+  - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
   ############################################################################
   # Install a recent CMake
   ############################################################################
   - |
-    mkdir deps
-    cd deps
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
       CMAKE_URL="http://www.cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz"
       mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
@@ -61,7 +61,8 @@ script:
       export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/llvm/install/lib"
       env
     fi
-    cd ..
+
+script:
   - test -d build || mkdir build
   - cd build ; test -e Makefile || cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D BRO_DIST=${BRO_DIST} .. ;
   - make VERBOSE=1
