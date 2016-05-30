@@ -17,7 +17,7 @@ script:
   # Install a recent CMake
   ############################################################################
   - |
-    mdkir deps
+    mkdir deps
     cd deps
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
       CMAKE_URL="http://www.cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz"
@@ -26,7 +26,6 @@ script:
     else
       brew install cmake
     fi
-    cd ..
   ############################################################################
   # Install libc++ and libc++abi (on Linux only; Xcode uses libc++ by default)
   ############################################################################
@@ -62,6 +61,7 @@ script:
       export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/llvm/install/lib"
       env
     fi
+    cd ..
   - test -d build || mkdir build
   - cd build ; test -e Makefile || cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D BRO_DIST=${BRO_DIST} .. ;
   - make VERBOSE=1
