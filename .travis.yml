@@ -5,6 +5,9 @@ matrix:
     # The default build:
     - &libclang-34
       compiler: clang
+      addons:
+        apt:
+          packages: [libstdc++4.7]
       env: COMPILER=clang++-3.4
   exclude:
     - &libclang-35
