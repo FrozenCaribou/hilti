@@ -7,7 +7,7 @@ matrix:
       compiler: clang
       addons:
         apt:
-          packages: [libstdc++4.7]
+          packages: [libstdc++-4.8-dev]
       env: COMPILER=clang++-3.4
   exclude:
     - &libclang-35
@@ -51,7 +51,7 @@ before_install:
         LIBCXX_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxx-${LLVM_VERSION}${LLVM_TAR_SUFFIX}"
         LIBCXXABI_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxxabi-${LLVM_VERSION}${LLVM_TAR_SUFFIX}"
 
-        if [[ "${LLVM_TAR_SUFFIX} == ".src.tar.gz" ]]; then
+        if [[ "${LLVM_TAR_SUFFIX}" == ".src.tar.gz" ]]; then
           TAR_FLAGS="-xz"
         else
           TAR_FLAGS="-xJ"
