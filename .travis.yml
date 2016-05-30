@@ -1,4 +1,5 @@
 language: cpp
+compiler: clang
 matrix:
   include:
     # The default build:
@@ -59,11 +60,12 @@ before_install:
       export CXXFLAGS="-isystem ${DEPS_DIR}/llvm/install/include/c++/v1"
       export LDFLAGS="-L ${DEPS_DIR}/llvm/install/lib -l c++ -l c++abi"
       export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/llvm/install/lib"
-      env
     fi
 
-script:
+install:
+  - env
   - cd ${TRAVIS_BUILD_DIR}
+  - pwd
   - test -d build || mkdir build
   - cd build ; test -e Makefile || cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D BRO_DIST=${BRO_DIST} .. ;
   - make VERBOSE=1
