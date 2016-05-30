@@ -1,10 +1,10 @@
 language: cpp
-compiler: clang
+#compiler: clang
 matrix:
   include:
     # The default build:
     - &libclang-35
-      addons: {apt: {sources: [ubuntu-toolchain-r-test, llvm-toolchain-precise-3.5, kalakris-cmake], packages: [libclang-3.5-dev, clang-3.5, libc++-dev, libc++abi-dev]}}
+      addons: {apt: {sources: [ubuntu-toolchain-r-test, llvm-toolchain-precise-3.5, kalakris-cmake], packages: [libclang-3.5-dev, clang-3.5]}}
       env: LLVM_VERSION=3.5
 
 before_install:
@@ -62,7 +62,7 @@ before_install:
       export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/llvm/install/lib"
     fi
 
-install:
+script:
   - env
   - cd ${TRAVIS_BUILD_DIR}
   - pwd
