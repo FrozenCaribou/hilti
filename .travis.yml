@@ -1,9 +1,3 @@
 language: cpp
 compiler: clang
-branches:
-  only:
-  - master
-before_install:
-  clang --verbose
-
 script: make -j
