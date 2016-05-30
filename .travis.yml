@@ -5,11 +5,11 @@ matrix:
     # The default build:
     - &libclang-34
       compiler: clang
-      env: LLVM_VERSION=3.4
+      env: COMPILER=clang++-3.4
   exclude:
     - &libclang-35
       addons: {apt: {sources: [ubuntu-toolchain-r-test, llvm-toolchain-precise-3.5, kalakris-cmake], packages: [libclang-3.5-dev, clang-3.5, clang-3.5-dev, llvm-3.5, llvm-3.5-dev]}}
-      env: LLVM_VERSION=3.5 CC=clang-3.5 CXX=clang++-3.5
+      env: COMPILER=clang++-3.5 CC=clang-3.5 CXX=clang++-3.5
 
 before_install:
   - export LD_LIBRARY_PATH=/usr/lib/llvm-${LLVM_VERSION}/lib/
@@ -36,7 +36,8 @@ before_install:
   ############################################################################
   - |
     if [[ "${TRAVIS_OS_NAME}" == "linux" && "${STDLIB}" != "libstdc++" ]]; then
-      if   [[ "${COMPILER}" == "clang++-3.5" ]]; then LLVM_VERSION="3.5.2"
+      if   [[ "${COMPILER}" == "clang++-3.4" ]]; then LLVM_VERSION="3.4.2"
+      elif [[ "${COMPILER}" == "clang++-3.5" ]]; then LLVM_VERSION="3.5.2"
       elif [[ "${COMPILER}" == "clang++-3.6" ]]; then LLVM_VERSION="3.6.2";
       elif [[ "${COMPILER}" == "clang++-3.7" ]]; then LLVM_VERSION="3.7.1";
       elif [[ "${COMPILER}" == "clang++-3.8" ]]; then LLVM_VERSION="3.8.0";
