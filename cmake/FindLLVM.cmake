@@ -43,18 +43,22 @@ if (LLVM_INCLUDE_DIR)
 else ()
 
   find_program(LLVM_CONFIG_EXEC
-      NAMES llvm-config-3.5
+      NAMES llvm-config
       PATHS /opt/local/bin  /opt/llvm/bin
   )
-
+  
+  exec_program(${LLVM_CONFIG_EXEC} ARGS --bindir OUTPUT_VARIABLE LLVM_BIN_DIR)
+  
   find_program(LLVM_CLANG_EXEC
-      NAMES clang-3.5
-      PATHS /opt/local/bin  /opt/llvm/bin
+      NAMES clang
+      PATHS ${LLVM_BIN_DIR}
+      NO_DEFAULT_PATH
   )
 
   find_program(LLVM_CLANGXX_EXEC
-      NAMES clang++-3.5
-      PATHS /opt/local/bin  /opt/llvm/bin
+      NAMES clang++
+      PATHS ${LLVM_BIN_DIR}
+      NO_DEFAULT_PATH
   )
 
   set(LLVM_FOUND TRUE)
