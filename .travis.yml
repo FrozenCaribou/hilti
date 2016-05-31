@@ -8,7 +8,6 @@ matrix:
     - &libclang-35
       addons: {apt: {sources: [ubuntu-toolchain-r-test, llvm-toolchain-precise-3.5], packages: [libclang-3.5-dev, clang-3.5, llvm-3.5, llvm-3.5-dev, libpcap-dev, libedit-dev]}}
       env: COMPILER=clang++-3.5 LLVM_CONFIG_EXEC=llvm-config-3.5 LLVM_VERSION=3.5
-
   exclude:
     - &libclang-34
       compiler: clang
