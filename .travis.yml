@@ -1,5 +1,5 @@
 language: cpp
-#compiler: clang
+compiler: clang
 matrix:
   include:
     # The default build:
@@ -75,7 +75,7 @@ before_install:
       ls ${DEPS_DIR}/llvm/install/include/c++/v1
     fi
 
-script:
+install:
   - env
   - cd ${TRAVIS_BUILD_DIR}
   - test -d build || mkdir build
