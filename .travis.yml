@@ -71,8 +71,8 @@ before_install:
       export CXXFLAGS="-isystem ${DEPS_DIR}/llvm/install/include/c++/v1"
       export LDFLAGS="-L ${DEPS_DIR}/llvm/install/lib -l c++ -l c++abi"
       export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/llvm/install/lib"
+      (cp llvm/build/projects/libcxxabi/include/cxxabi.h ${DEPS_DIR}/llvm/install/include/c++/v1/)
       ls ${DEPS_DIR}/llvm/install/include/c++/v1
-      ls ${DEPS_DIR}/llvm/install/
     fi
 
 script:
