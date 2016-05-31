@@ -4,11 +4,11 @@ matrix:
   include:
     # The default build:
     - &libclang-36
-      addons: {apt: {sources: [ubuntu-toolchain-r-test, llvm-toolchain-precise-3.6, kalakris-cmake], packages: [libclang-3.6-dev, clang-3.6, clang-3.6-dev, llvm-3.6, llvm-3.6-dev]}}
+      addons: {apt: {sources: [ubuntu-toolchain-r-test, llvm-toolchain-precise-3.6, kalakris-cmake], packages: [libclang-3.6-dev, clang-3.6, clang-3.6-dev, llvm-3.6]}}
       env: COMPILER=clang++-3.6 CXX=clang++-3.6 CC=clang-3.6
       
     - &libclang-35
-      addons: {apt: {sources: [ubuntu-toolchain-r-test, llvm-toolchain-precise-3.5, kalakris-cmake], packages: [libclang-3.5-dev, clang-3.5, clang-3.5-dev, llvm-3.5, llvm-3.5-dev]}}
+      addons: {apt: {sources: [ubuntu-toolchain-r-test, llvm-toolchain-precise-3.5, kalakris-cmake], packages: [libclang-3.5-dev, clang-3.5, clang-3.5-dev, llvm-3.5]}}
       env: COMPILER=clang++-3.5 CXX=clang++-3.5 CC=clang-3.5
 
   exclude:
@@ -71,7 +71,7 @@ before_install:
       export CXXFLAGS="-isystem ${DEPS_DIR}/llvm/install/include/c++/v1"
       export LDFLAGS="-L ${DEPS_DIR}/llvm/install/lib -l c++ -l c++abi"
       export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/llvm/install/lib"
-      (cp llvm/build/projects/libcxxabi/include/cxxabi.h ${DEPS_DIR}/llvm/install/include/c++/v1/)
+      (cp llvm/projects/libcxxabi/include/cxxabi.h ${DEPS_DIR}/llvm/install/include/c++/v1/)
       ls ${DEPS_DIR}/llvm/install/include/c++/v1
     fi
 
