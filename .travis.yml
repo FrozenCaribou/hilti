@@ -79,4 +79,4 @@ install:
   - cd ${TRAVIS_BUILD_DIR}
   - test -d build || mkdir build
   - cd build ; test -e Makefile || cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D BRO_DIST=${BRO_DIST} .. ;
-  - make VERBOSE=1 -j
+  - make VERBOSE=1
