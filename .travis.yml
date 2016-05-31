@@ -43,24 +43,18 @@ before_install:
   # Install libc++ and libc++abi (on Linux only; Xcode uses libc++ by default)
   ############################################################################
   - |
-    if [[ "${TRAVIS_OS_NAME}" == "linux" && "${STDLIB}" != "libstdc++" ]]; then
-      if   [[ "${COMPILER}" == "clang++-3.4" ]]; then LLVM_VERSION="3.4.2"; LLVM_TAR_SUFFIX=".src.tar.gz";
-      elif [[ "${COMPILER}" == "clang++-3.5" ]]; then LLVM_VERSION="3.5.2"; LLVM_TAR_SUFFIX=".src.tar.xz";
-      elif [[ "${COMPILER}" == "clang++-3.6" ]]; then LLVM_VERSION="3.6.2.src.tar.xz"; LLVM_TAR_SUFFIX=".src.tar.xz";
-      elif [[ "${COMPILER}" == "clang++-3.7" ]]; then LLVM_VERSION="3.7.1.src.tar.xz"; LLVM_TAR_SUFFIX=".src.tar.xz";
-      elif [[ "${COMPILER}" == "clang++-3.8" ]]; then LLVM_VERSION="3.8.0.src.tar.xz"; LLVM_TAR_SUFFIX=".src.tar.xz";
-      else                                            LLVM_VERSION="trunk"; LLVM_TAR_SUFFIX=".src.tar.xz";
-      fi
-      if [[ "${LLVM_VERSION}" != "trunk" ]]; then
-        LLVM_URL="http://llvm.org/releases/${LLVM_VERSION}/llvm-${LLVM_VERSION}${LLVM_TAR_SUFFIX}"
-        LIBCXX_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxx-${LLVM_VERSION}${LLVM_TAR_SUFFIX}"
-        LIBCXXABI_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxxabi-${LLVM_VERSION}${LLVM_TAR_SUFFIX}"
 
-        if [[ "${LLVM_TAR_SUFFIX}" == ".src.tar.gz" ]]; then
-          TAR_FLAGS="-xz"
-        else
-          TAR_FLAGS="-xJ"
-        fi
+    if [[ "${TRAVIS_OS_NAME}" == "linux" && "${STDLIB}" != "libstdc++" ]]; then
+      if   [[ "${COMPILER}" == "clang++-3.5" ]]; then LLVM_VERSION="3.5.2"
+      elif [[ "${COMPILER}" == "clang++-3.6" ]]; then LLVM_VERSION="3.6.2";
+      elif [[ "${COMPILER}" == "clang++-3.7" ]]; then LLVM_VERSION="3.7.1";
+      elif [[ "${COMPILER}" == "clang++-3.8" ]]; then LLVM_VERSION="3.8.0";
+      else                                            LLVM_VERSION="trunk"; fi
+      if [[ "${LLVM_VERSION}" != "trunk" ]]; then
+        LLVM_URL="http://llvm.org/releases/${LLVM_VERSION}/llvm-${LLVM_VERSION}.src.tar.xz"
+        LIBCXX_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxx-${LLVM_VERSION}.src.tar.xz"
+        LIBCXXABI_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxxabi-${LLVM_VERSION}.src.tar.xz"
+        TAR_FLAGS="-xJ"
       else
         LLVM_URL="https://github.com/llvm-mirror/llvm/archive/master.tar.gz"
         LIBCXX_URL="https://github.com/llvm-mirror/libcxx/archive/master.tar.gz"
@@ -77,6 +71,8 @@ before_install:
       export CXXFLAGS="-isystem ${DEPS_DIR}/llvm/install/include/c++/v1"
       export LDFLAGS="-L ${DEPS_DIR}/llvm/install/lib -l c++ -l c++abi"
       export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/llvm/install/lib"
+      ls ${DEPS_DIR}/llvm/install/include/c++/v1
+      ls ${DEPS_DIR}/llvm/install/
     fi
 
 script:
