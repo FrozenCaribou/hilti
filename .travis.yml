@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-#dist: trusty
+dist: trusty
 matrix:
   include:
     # The default build:
@@ -80,6 +80,5 @@ install:
   - env
   - cd ${TRAVIS_BUILD_DIR}
   - test -d build || mkdir build
-  - export CXXFLAGS="$CXXFLAGS -v"
   - cd build ; test -e Makefile || cmake -D CMAKE_BUILD_TYPE=Release -D BRO_DIST=${BRO_DIST} .. ;
-  - make -j
+  - make -j 2
