@@ -81,4 +81,4 @@ install:
   - cd ${TRAVIS_BUILD_DIR}
   - test -d build || mkdir build
   - cd build ; test -e Makefile || cmake -D CMAKE_BUILD_TYPE=Release -D BRO_DIST=${BRO_DIST} .. ;
-  - make -j 2
+  - make VERBOSE=1 -j 1
