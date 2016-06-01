@@ -5,4 +5,4 @@ sudo: required
 services:
   - docker
 
-script: docker build -t .
+script: docker build .
