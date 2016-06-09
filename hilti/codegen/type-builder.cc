@@ -164,7 +164,7 @@ TypeInfo* TypeBuilder::typeInfo(shared_ptr<hilti::Type> type, bool llvm_type_onl
 #endif
 
     if ( ! llvm_type_only )
-        _ti_cache.insert(make_tuple(type, ti));
+        _ti_cache.insert(make_pair(type, ti));
 
     return ti;
 }

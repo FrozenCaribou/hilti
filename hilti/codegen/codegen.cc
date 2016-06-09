@@ -804,7 +804,7 @@ void CodeGen::createRtti()
 llvm::Value* CodeGen::cacheValue(const string& component, const string& key, llvm::Value* val)
 {
     string idx = component + "::" + key;
-    _value_cache.insert(make_tuple(idx, val));
+    _value_cache.insert(std::make_pair(idx, val));
     return val;
 }
 
@@ -818,7 +818,7 @@ llvm::Value* CodeGen::lookupCachedValue(const string& component, const string& k
 llvm::Constant* CodeGen::cacheConstant(const string& component, const string& key, llvm::Constant* val)
 {
     string idx = component + "::" + key;
-    _constant_cache.insert(make_tuple(idx, val));
+    _constant_cache.insert(make_pair(idx, val));
     return val;
 }
 
@@ -832,7 +832,7 @@ llvm::Constant* CodeGen::lookupCachedConstant(const string& component, const str
 llvm::Type* CodeGen::cacheType(const string& component, const string& key, llvm::Type* type)
 {
     string idx = component + "::" + key;
-    _type_cache.insert(make_tuple(idx, type));
+    _type_cache.insert(make_pair(idx, type));
     return type;
 }
 
@@ -855,7 +855,7 @@ string CodeGen::uniqueName(const string& component, const string& str)
     auto i = _unique_names.find(idx);
     int cnt = (i != _unique_names.end()) ? i->second : 1;
 
-    _unique_names.insert(make_tuple(idx, cnt + 1));
+    _unique_names.insert(make_pair(idx, cnt + 1));
 
     if ( cnt == 1 )
         return ::util::fmt(".hlt.%s.%s", str, linkerModuleIdentifier());
@@ -1325,7 +1325,7 @@ llvm::Value* CodeGen::llvmAddTmp(const string& name, llvm::Type* type, llvm::Val
         popBuilder();
     }
 
-    _functions.back()->tmps.insert(std::make_tuple(tname, std::make_tuple(tmp, nullptr, false)));
+    _functions.back()->tmps.insert(std::make_pair(tname, std::make_tuple(tmp, nullptr, false)));
 
     return tmp;
 }
@@ -1427,18 +1427,18 @@ CodeGen::llvmAdaptFunctionArgs(llvm::Type* rtype, parameter_list params, type::f
 
              if ( ast::isA<hilti::type::TypeType>(ptype) )
                  // Pass just RTTI for type arguments.
-                 llvm_args.push_back(make_tuple(string("ti_") + p.first, llvmTypePtr(llvmTypeRtti())));
+                 llvm_args.push_back(make_pair(string("ti_") + p.first, llvmTypePtr(llvmTypeRtti())));
 
              else {
                  TypeInfo* pti = typeInfo(ptype);
                  if ( pti->pass_type_info ) {
-                     llvm_args.push_back(make_tuple(string("ti_") + p.first, llvmTypePtr(llvmTypeRtti())));
-                     llvm_args.push_back(make_tuple(p.first, llvmTypePtr()));
+                     llvm_args.push_back(make_pair(string("ti_") + p.first, llvmTypePtr(llvmTypeRtti())));
+                     llvm_args.push_back(make_pair(p.first, llvmTypePtr()));
                  }
 
                  else {
                      auto arg_llvm_type = llvmType(p.second);
-                     llvm_args.push_back(make_tuple(p.first, arg_llvm_type));
+                     llvm_args.push_back(make_pair(p.first, arg_llvm_type));
                  }
              }
 
@@ -1446,7 +1446,7 @@ CodeGen::llvmAdaptFunctionArgs(llvm::Type* rtype, parameter_list params, type::f
          }
          case type::function::C: {
              auto arg_llvm_type = llvmType(p.second);
-             llvm_args.push_back(make_tuple(p.first, arg_llvm_type));
+             llvm_args.push_back(make_pair(p.first, arg_llvm_type));
              break;
          }
 
@@ -1485,7 +1485,7 @@ CodeGen::llvmAdaptFunctionArgs(llvm::Type* rtype, parameter_list params, type::f
         internalError("unknown calling convention in llvmAddFunction");
     }
 
-    return std::make_tuple(rtype, llvm_args);
+    return std::make_pair(rtype, llvm_args);
 }
 
 llvm::Function* CodeGen::llvmAddFunction(const string& name, llvm::Type* rtype, parameter_list params, bool internal, type::function::CallingConvention cc, bool skip_ctx)
@@ -1948,7 +1948,7 @@ void CodeGen::llvmClearLocalAfterInstruction(shared_ptr<Expression> expr, const 
     // Note: it's ok here if stmt is null, we use that for all tmps that
     // aren't directly associated with a statement.
 
-    _functions.back()->dtors_after_ins_exprs.insert(std::make_pair(stmt, std::make_tuple(expr, location_addl)));
+    _functions.back()->dtors_after_ins_exprs.insert(std::make_pair(stmt, std::make_pair(expr, location_addl)));
 }
 
 void CodeGen::llvmBuildInstructionCleanup(bool flush, bool dont_do_locals)
