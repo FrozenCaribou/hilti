@@ -2,6 +2,7 @@
 #include <fstream>
 
 #include <util/util.h>
+#include <limits.h>
 
 #include "context.h"
 #include "operator.h"

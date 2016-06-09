@@ -8,6 +8,7 @@
 #include <map>
 #include <string>
 #include <stdexcept>
+#include <algorithm>
 
 #include "3rdparty/tinyformat/tinyformat.h"
 
