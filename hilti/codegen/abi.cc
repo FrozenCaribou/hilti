@@ -4,13 +4,14 @@
 #include "abi.h"
 
 #include "libffi/src/x86/ffi64.h"
+#include <llvm-c/TargetMachine.h>
 
 using namespace hilti;
 using namespace codegen;
 
 unique_ptr<ABI> ABI::createABI(CodeGen* cg)
 {
-    string striple = llvm::sys::getDefaultTargetTriple();
+    string striple = LLVMGetDefaultTargetTriple();
     llvm::Triple triple(striple);
 
     unique_ptr<ABI> abi;
