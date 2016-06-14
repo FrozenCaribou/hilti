@@ -219,6 +219,10 @@ public:
     /// empty list currently.
     std::list<string> dependencies(shared_ptr<Module> module);
 
+    /// Returns a list of path names that all modules of this context depends on.
+    ///
+    std::list<string> dependencies();
+
 private:
     shared_ptr<Options> _options;
     shared_ptr<hilti::CompilerContext> _hilti_context;

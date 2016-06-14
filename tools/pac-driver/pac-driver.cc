@@ -507,11 +507,19 @@ bool jitPac2(const std::list<string>& pac2, std::shared_ptr<binpac::Options> opt
 
     std::list<llvm::Module* > llvm_modules;
 
-    for ( auto p : pac2 ) {
-        auto llvm_module = PacContext->compile(p);
+    // First load all *.pac2 given in input to resolve import dependencies
+    for ( auto p : pac2 )
+        auto mod = PacContext->load(p);
+
+    // Then compile all modules in the context
+    for (auto &d : PacContext->dependencies()){
+        // The input *.pac2 previously loaded are internally dectected and not parsed again.
+        auto mod = PacContext->load(d);
+
+        auto llvm_module = PacContext->compile(mod);
 
         if ( ! llvm_module ) {
-            fprintf(stderr, "compiling %p failed\n", p.c_str());
+            fprintf(stderr, "compiling %p failed\n", d.c_str());
             return false;
         }
 

@@ -428,3 +428,12 @@ std::list<string> binpac::CompilerContext::dependencies(shared_ptr<Module> modul
     return std::list<string>();
 }
 
+std::list<string> binpac::CompilerContext::dependencies()
+{
+    std::list<string> ret;
+    for (auto &entry : _modules)
+        ret.push_back(entry.first);
+
+    return ret;
+}
+

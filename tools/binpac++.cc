@@ -251,12 +251,25 @@ int main(int argc, char** argv)
 
     if ( output_llvm ) {
 
+        std::list<llvm::Module *> mods;
+
         if ( ! llvm_module ) {
             error(input, "Aborting due to LLVM compilation error.");
             return 1;
         }
 
-        std::list<llvm::Module *> mods = { llvm_module };
+        for (auto &d : ctx->dependencies()){
+            auto mod = ctx->load(d);
+            auto tmp_llvm_module = ctx->compile(mod);
+
+            if ( ! tmp_llvm_module ) {
+                fprintf(stderr, "compiling %p failed\n", d.c_str());
+                return false;
+            }
+
+            mods.push_back(tmp_llvm_module);
+        }
+
         auto linked_module = ctx->linkModules(input, mods,
                                               std::list<string>(),
                                               path_list(), path_list(),
