@@ -51,6 +51,10 @@ type ReassemblyPolicy = enum {
     First = 1
 };
 
+# These values must match Hilti::ExpireStrategy
+# ExpireStrategy for map
+type ExpireStrategy = enum { Create = 1, Access = 2};
+
 # %begin-Precision
 # Byte-order.
 type Precision = enum { Double = 1, Single = 2 };

@@ -100,3 +100,17 @@ void CodeBuilder::visit(expression::operator_::map::Clear* i)
     cg()->builder()->addInstruction(nullptr, hilti::instruction::map::Clear, op1);
     setResult(op1);
 }
+
+void CodeBuilder::visit(expression::operator_::map::Timeout* i)
+{
+    auto op1 = cg()->hiltiExpression(i->op1());
+
+    auto strategy = cg()->hiltiExpireStrategy(callParameter(i->op3(), 0));
+    auto time_interval = cg()->hiltiExpression(callParameter(i->op3(), 1));
+
+
+    cg()->builder()->addInstruction(nullptr, hilti::instruction::map::Timeout, op1, strategy, time_interval);
+
+
+    setResult(op1);
+}

@@ -980,6 +980,25 @@ shared_ptr<hilti::Expression> CodeGen::hiltiCharset(shared_ptr<Expression> expr)
     return result;
 }
 
+shared_ptr<hilti::Expression> CodeGen::hiltiExpireStrategy(shared_ptr<Expression> expr)
+{
+    auto t1 = hilti::builder::tuple::create({
+        hilti::builder::id::create("BinPAC::ExpireStrategy::Create"),
+        hilti::builder::id::create(string("Hilti::ExpireStrategy::Create"))});
+
+    auto t2 = hilti::builder::tuple::create({
+        hilti::builder::id::create("BinPAC::ExpireStrategy::Access"),
+        hilti::builder::id::create(string("Hilti::ExpireStrategy::Access"))});
+
+    auto tuple = hilti::builder::tuple::create({ t1, t2});
+    auto result = moduleBuilder()->addTmp("strategy", hilti::builder::type::byName("Hilti::ExpireStrategy"));
+    auto op = hiltiExpression(expr);
+
+    builder()->addInstruction(result, hilti::instruction::Misc::SelectValue, op, tuple);
+
+    return result;
+}
+
 shared_ptr<hilti::Expression> CodeGen::hiltiExtractsBitsFromInteger(shared_ptr<hilti::Expression> value, shared_ptr<Type> type, shared_ptr<Expression> border, shared_ptr<hilti::Expression> lower_in, shared_ptr<hilti::Expression> upper_in)
 {
     auto itype = ast::checkedCast<type::Integer>(type);

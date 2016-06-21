@@ -445,6 +445,13 @@ public:
     /// Returns: The equivalent HILTI character set.
     shared_ptr<hilti::Expression> hiltiCharset(shared_ptr<Expression> expr);
 
+    /// Converts an expression of type BinPAC::ExpireStrategy into a HILTI value of type Hilti::ExpireStrategy.
+    ///
+    /// expr: The expression to convert.
+    ///
+    /// Returns: The equivalent HILTI ExpireStrategy enum.
+    shared_ptr<hilti::Expression> hiltiExpireStrategy(shared_ptr<Expression> expr);
+
     /// XXX
     shared_ptr<hilti::Expression> hiltiExtractsBitsFromInteger(shared_ptr<hilti::Expression> value, shared_ptr<Type> type, shared_ptr<Expression> border, shared_ptr<hilti::Expression> lower, shared_ptr<hilti::Expression> upper);
 
