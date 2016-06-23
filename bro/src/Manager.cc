@@ -3187,3 +3187,9 @@ void Manager::DumpMemoryStatistics()
 		heap, alloced, size_stacks, num_stacks, current_allocs, total_refs);
 	}
 
+void Manager::AdvanceHltGlobalTimerMgr(double ts)
+	{
+	hlt_execution_context* ctx = hlt_global_execution_context();
+	hlt_exception* excpt = 0;
+	hlt_timer_mgr_advance_global(hlt_time_from_timestamp(network_time), &excpt, ctx);
+	}

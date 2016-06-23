@@ -50,6 +50,7 @@ plugin::Configuration plugin::Bro_Hilti::Plugin::Configure()
 	config.version.minor = 1;
 
 	EnableHook(plugin::HOOK_LOAD_FILE);
+	EnableHook(plugin::HOOK_UPDATE_NETWORK_TIME);
 
 	return config;
 	}
@@ -206,6 +207,7 @@ bool plugin::Bro_Hilti::Plugin::HookQueueEvent(Event* event)
 
 void plugin::Bro_Hilti::Plugin::HookUpdateNetworkTime(double network_time)
 	{
+	_manager->AdvanceHltGlobalTimerMgr(network_time);
 	}
 
 void plugin::Bro_Hilti::Plugin::HookDrainEvents()
@@ -216,3 +218,4 @@ void plugin::Bro_Hilti::Plugin::HookBroObjDtor(void* obj)
 	{
 	lib_bro_object_mapping_unregister_bro(obj);
 	}
+

@@ -274,6 +274,11 @@ public:
 	 */
 	 void DumpMemoryStatistics();
 
+     /**
+      * Advance the time of the Hilti global timer manager
+      */
+     void AdvanceHltGlobalTimerMgr(double ts);
+
 protected:
 	// We include the protected part only when compiling the hilti/
 	// subsystem so that we can use C++11's shared_ptr.
