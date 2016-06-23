@@ -70,3 +70,18 @@ opBegin(set::Clear : MethodCall)
         return op1()->type();
     }
 opEnd
+
+opBegin(set::Timeout : MethodCall)
+    opOp1(std::make_shared<type::Set>())
+    opOp2(std::make_shared<type::MemberAttribute>(std::make_shared<ID>("timeout")))
+    opCallArg1("strategy", std::make_shared<type::Enum>())
+    opCallArg2("interval", std::make_shared<type::Interval>())
+    opDoc("Activates automatic expiration of items for the set.")
+
+    opValidate() {
+    }
+
+    opResult() {
+        return op1()->type();
+    }
+opEnd
