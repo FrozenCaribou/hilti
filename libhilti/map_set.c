@@ -419,7 +419,6 @@ void hlt_map_insert(hlt_map* m, const hlt_type_info* tkey, void* key, const hlt_
             kh_value(m, i).timer = __hlt_timer_new_map(cookie, excpt, ctx);
             hlt_time t = hlt_timer_mgr_current(m->tmgr, excpt, ctx) + m->timeout;
             hlt_timer_mgr_schedule(m->tmgr, t, kh_value(m, i).timer, excpt, ctx);
-            GC_DTOR(kh_value(m, i).timer, hlt_timer, ctx); // Not memory-managed on our end.
         }
         else
             kh_value(m, i).timer = 0;
@@ -812,7 +811,6 @@ void hlt_set_insert(hlt_set* m, const hlt_type_info* tkey, void* key, hlt_except
             kh_value(m, i) = __hlt_timer_new_set(cookie, excpt, ctx);
             hlt_interval t = hlt_timer_mgr_current(m->tmgr, excpt, ctx) + m->timeout;
             hlt_timer_mgr_schedule(m->tmgr, t, kh_value(m, i), excpt, ctx);
-            GC_DTOR(kh_value(m, i), hlt_timer, ctx); // Not memory-managed on our end.
         }
         else
             kh_value(m, i) = 0;

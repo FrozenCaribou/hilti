@@ -152,7 +152,6 @@ static __hlt_list_node* _make_node(hlt_list* l, void *val, hlt_exception** excpt
         GC_CCTOR(cookie, hlt_iterator_list, ctx);
         n->timer = __hlt_timer_new_list(cookie, excpt, ctx);
         hlt_timer_mgr_schedule(l->tmgr, t, n->timer, excpt, ctx);
-        GC_DTOR(n->timer, hlt_timer, ctx); // Not memory-managed on our end.
     }
 
     else

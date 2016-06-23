@@ -99,7 +99,6 @@ static inline void _set_entry(hlt_vector* v, hlt_vector_idx i, void *val, int dt
         v->timers[i] = __hlt_timer_new_vector(cookie, excpt, ctx); // Not memory-managed on our end.
         hlt_time t = hlt_timer_mgr_current(v->tmgr, excpt, ctx) + v->timeout;
         hlt_timer_mgr_schedule(v->tmgr, t, v->timers[i], excpt, ctx);
-        GC_DTOR(v->timers[i], hlt_timer, ctx); // Not memory-managed on our end.
     }
 }
 
