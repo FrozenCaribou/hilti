@@ -65,4 +65,16 @@ void CodeBuilder::visit(expression::operator_::vector::Size* i)
     setResult(result);
 }
 
+void CodeBuilder::visit(expression::operator_::vector::Timeout* i)
+{
+    auto op1 = cg()->hiltiExpression(i->op1());
 
+    auto strategy = cg()->hiltiExpireStrategy(callParameter(i->op3(), 0));
+    auto time_interval = cg()->hiltiExpression(callParameter(i->op3(), 1));
+
+
+    cg()->builder()->addInstruction(nullptr, hilti::instruction::vector::Timeout, op1, strategy, time_interval);
+
+
+    setResult(op1);
+}
