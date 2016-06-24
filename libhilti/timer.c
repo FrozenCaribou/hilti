@@ -197,7 +197,8 @@ void hlt_timer_cancel(hlt_timer* timer, hlt_exception** excpt, hlt_execution_con
         return;
     }
 
-    priority_queue_remove(timer->mgr->timers, timer);
+   if (*timer->mgr->timers->d != 0)
+        priority_queue_remove(timer->mgr->timers, timer);
     GC_DTOR(timer, hlt_timer, ctx);
 
     timer->mgr = 0;
